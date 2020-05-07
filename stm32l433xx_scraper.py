@@ -14,7 +14,7 @@ class procPin:
   def print_fn(self):
     return '`'+ self.pinName + ' => ' + self.pinNum + '\n'
 
-pf = tabula.read_pdf("https://www.st.com/resource/en/datasheet/stm32l433rc.pdf", pages = '62-73', lattice = True)
+pf = tabula.read_pdf("datasheets/stm32l433rc.pdf", pages = '62-73', lattice = True)
 pf = pf.values.astype(str)
 # Collect list of all unique functions
 
@@ -52,3 +52,4 @@ for l,p in zip(fl,pinByFunc):
 
 f.close()
 
+# Features: Supports syntax, feature count, Missed JTAG interfaces (JTCK-SWCLK on PA14)
