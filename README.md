@@ -2,9 +2,9 @@
 A tool that scrapes pin attributes from datasheets and converts them to the PinSpec format.
 
 ## Dependencies
-numpy
-tabula-py
-pandas
+numpy  
+tabula-py  
+pandas  
 
 ##scraper.py
 
@@ -14,25 +14,24 @@ pandas
 python3 scraper.py [component name]
 ```
 
-Supported Components:
-  `adm7150`
-  `cc2640_rgz`
-  `cc2640_rhb`
-  `cc2640_rsm`
-  `stm32l433_lqfp48`
-  `stm32l433_ufqfpn48`
-  `stm32l433_wlcsp49`
-  `stm32l433_wlcsp64`
-  `stm32l433_lqfp64`
-  `stm32l433_lqfp64_smps`
-  `stm32l433_ufbga64`
-  `stm32l433_lqfp100`
-  `stm32l433_ufbga100`
+Supported Components:  
+  `adm7150`  
+  `cc2640_rgz`  
+  `cc2640_rhb`  
+  `cc2640_rsm`  
+  `stm32l433_lqfp48`  
+  `stm32l433_ufqfpn48`  
+  `stm32l433_wlcsp49`  
+  `stm32l433_wlcsp64`  
+  `stm32l433_lqfp64`  
+  `stm32l433_lqfp64_smps`  
+  `stm32l433_ufbga64`  
+  `stm32l433_lqfp100`  
+  `stm32l433_ufbga100`  
 
 The tool will print the PinSpec to the command line and write it to a file `pins.txt`.
 
 ###Adding component support
-Adding support for a new component involves usage of the scrape function in `scraper.py`. 
 To add support for a new component, add the following code to `scraper.py` in the section marked `SUPPORTED COMPONENTS` and change the inputs to the scrape function. 
 
 
@@ -58,23 +57,24 @@ Path to datasheet file.
 Pages where pin description tables are located.
 
 ####strm 
-[True, False, None]
+[True, False, None]  
 Enable stream mode when the rows or columns in the tables are not seperated by lines.
 
 ####lttc
-[True, False, None]
+[True, False, None]  
 Enable lattice mode when the rows or columns in the tables are seperated by lines.
 
 ####gss
-[True, False, None]
+[True, False, None]  
 Enabling guess mode lets the tool determine the area on the page where the table is located.
 
 ####a
-[y1, x1, y2, x2] or None 
-y1 = top of table
-x1 = left of table
-y2 = top + height of table
-x2 = left + width of table
+[y1, x1, y2, x2] or None   
+y1 = top of table  
+x1 = left of table  
+y2 = top + height of table  
+x2 = left + width of table  
+
 The tool accepts the coordinates (in *point measurements*, not *pixels*) of the table you want to extract. (Alternatively, it can auto-detect tables, but if you're dealing with thousands of pages with identical regions, it's better to be explicit.)
 
 You can either use the "full" Tabula app to get these coordinates, or manually measure using the Preview app in Mac OS X.
@@ -134,6 +134,6 @@ Pages where pin description tables are located.
 Enable guess mode where tool automatically determines table coordinates.
 
 ####[AREA]
-Table coordinates. 
-Input y1,x1,y2,x2 with no spaces, or `None`. 
+Table coordinates.  
+Input y1,x1,y2,x2 with no spaces, or `None`.  
 i.e. `271.9575,32.5125,447.1425,133.4925`
