@@ -20,6 +20,13 @@ Supported Components:
   `cc2640_rhb`
   `cc2640_rsm`
   `stm32l433_lqfp48`
+  `stm32l433_ufqfpn48`
+  `stm32l433_wlcsp49`
+  `stm32l433_wlcsp64`
+  `stm32l433_lqfp64`
+  `stm32l433_lqfp64_smps`
+  `stm32l433_ufbga64`
+  `stm32l433_lqfp100`
   `stm32l433_ufbga100`
 
 The tool will print the PinSpec to the command line and write it to a file `pins.txt`.

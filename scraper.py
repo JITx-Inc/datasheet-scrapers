@@ -144,6 +144,34 @@ elif args.Component == 'stm32l433_lqfp48':
   pkg = scrape('STM32L433_LQFP48', 48, 'datasheets/stm32l433rc.pdf', 
                   '61-73', None, True, None, None, 0, 9, 
                   [i for i in range(1, 26)]) 
+elif args.Component == 'stm32l433_ufqfpn48': 
+  pkg = scrape('STM32L433_UFQFPN48', 48, 'datasheets/stm32l433rc.pdf', 
+                  '61-73', None, True, None, None, 1, 9, 
+                  [i for i in range(1, 26)]) 
+elif args.Component == 'stm32l433_wlcsp49': 
+  pkg = scrape('STM32L433_WLCSP49', 49, 'datasheets/stm32l433rc.pdf', 
+                  '61-73', None, True, None, None, 2, 9, 
+                  [i for i in range(1, 26)]) 
+elif args.Component == 'stm32l433_wlcsp64': 
+  pkg = scrape('STM32L433_WLCSP64', 64, 'datasheets/stm32l433rc.pdf', 
+                  '61-73', None, True, None, None, 3, 9, 
+                  [i for i in range(1, 26)]) 
+elif args.Component == 'stm32l433_lqfp64': 
+  pkg = scrape('STM32L433_LQFP64', 64, 'datasheets/stm32l433rc.pdf', 
+                  '61-73', None, True, None, None, 4, 9, 
+                  [i for i in range(1, 26)]) 
+elif args.Component == 'stm32l433_lqfp64_smps': 
+  pkg = scrape('STM32L433_LQFP64_SMPS', 64, 'datasheets/stm32l433rc.pdf', 
+                  '61-73', None, True, None, None, 5, 9, 
+                  [i for i in range(1, 26)]) 
+elif args.Component == 'stm32l433_ufbga64': 
+  pkg = scrape('STM32L433_UFBGA64', 64, 'datasheets/stm32l433rc.pdf', 
+                  '61-73', None, True, None, None, 6, 9, 
+                  [i for i in range(1, 26)]) 
+elif args.Component == 'stm32l433_lqfp100': 
+  pkg = scrape('STM32L433_LQFP100', 100, 'datasheets/stm32l433rc.pdf', 
+                  '61-73', None, True, None, None, 7, 9, 
+                  [i for i in range(1, 26)]) 
 elif args.Component == 'stm32l433_ufbga100':
   pkg = scrape('STM32L433_UFBGA100', 100, 'datasheets/stm32l433rc.pdf',
                   '61-73', None, True, None, None, 8, 9, 
