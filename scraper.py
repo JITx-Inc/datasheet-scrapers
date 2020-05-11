@@ -8,6 +8,9 @@ import os
 import sys
 import argparse
 
+# Component Package
+# mpn - manufacturer part number
+# size - number of pins
 class package:
   def __init__(self, mpn, size):
     self.mpn = mpn
@@ -34,6 +37,9 @@ class package:
                align_text(self.maxNumLen, self.pins[key].number) + ']'] 
     return '\n'.join(result)
 
+# Pin
+# name - pin name
+# number - pin number
 class pin:
   def __init__(self, name, number):
       self.name = name
@@ -42,9 +48,30 @@ class pin:
   def __str__(self):
       return '[ ' + self.name + ' | ' + self.number + ' ]\n'
 
+# Aligns the text in the associated PinSpec column
+# maxlen - length of longest string in the PinSpec column
+# text - text to be added to column
 def align_text(maxlen, text):
     return ' ' + text + ((maxlen - len(text)) * ' ') + ' '
 
+# Scrapes a datasheet for the name and number of pins associated with a 
+# package. 
+# pkgName - package name
+# pkgSize - number of pins in package
+# fName - path to datasheet file
+# pgs - pages where pin description tables are located
+# strm - [True, False, None] - stream mode for when tables are
+#                              not seperated by lines
+# lttc - [True, False, None] - lattice mode for when tables are
+#                              seperated by lines
+# gss - [True, False, None] - guess area of table on the page
+# a - [y1, x1, y2, x2] or None : y1 = top of table
+#                                x1 = left of table
+#                                y2 = top + height of table
+#                                x2 = left + width of table
+# numCol - column number of column containing pin numbers
+# nameCol - column number of column containing pin names
+# tableNums - list of table numbers from DataFrame containing pin data
 def scrape(pkgName, pkgSize, fName, pgs, strm, lttc, gss, a, numCol, 
            nameCol, tableNums):
   result = package(pkgName, pkgSize)
@@ -60,6 +87,8 @@ def scrape(pkgName, pkgSize, fName, pgs, strm, lttc, gss, a, numCol,
         result.addPin(name, n)
   return result
 
+# Filters pin number string from table
+# number - string data for pin numbers
 def numFilter(number):
   number = number.replace('\'', '')
   number = number.replace('\\r', '')
@@ -75,25 +104,29 @@ def numFilter(number):
       result.append(n)
   return result 
 
+# Filters pin name string from table
+# name - string data for pin names
 def nameFilter(name):
   name = name.replace('\'', '')
   name = name.replace('\\r', '')
   return name
 
+# Prints a package's PinSpec to a file
+# package - instance of package that will be printed
 def toFile(package):
   f = open('./pins.txt', 'w+')
   f.write(str(package))
 
-#TODO function that spits out table number and data to initialize
-#TODO make python program interactive
-
-parser = argparse.ArgumentParser(description=
-                                  'Component to scrape pinSpec for')
+parser = argparse.ArgumentParser(description= 'Scrape pinSpec for component package')
 parser.add_argument('Component', type=str, 
                     help='Name of Specific Component')
 args = parser.parse_args()
 
 pkg = None
+
+# ========================================================================
+# SUPPORTED COMPONENTS
+# ========================================================================
 if args.Component == 'adm7150':
   pkg = scrape('ADM7150', 8, 'datasheets/ADM7150.pdf', '6-6', True, 
                   None, None, [271.9575, 32.5125, 447.1425, 133.4925], 0,
@@ -115,5 +148,8 @@ elif args.Component == 'stm32l433_ufbga100':
   pkg = scrape('STM32L433_UFBGA100', 100, 'datasheets/stm32l433rc.pdf',
                   '61-73', None, True, None, None, 8, 9, 
                   [i for i in range(1, 26)]) 
+
+# ========================================================================
+
 print(pkg)
 toFile(pkg)
