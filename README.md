@@ -2,7 +2,7 @@
 A tool that scrapes pin attributes from datasheets and converts them to the PinSpec format.
 
 ## Dependencies
-python3
+python3  
 numpy  
 tabula-py  
 pandas  
@@ -118,11 +118,11 @@ Note the `left`, `top`, `height`, and `width` parameters and calculate the follo
 * `x2` =  `left + width`
 
 #### printType 
-Include pin types to the PinSpec. Defaults to True.
+Include pin types to the PinSpec. Defaults to False.
 
 #### pinDir
 inputs - ['Up', 'Down', 'Left', 'Down']
-Direction of pins on symbol. If pinDir is not set, direction will determining according to pin type.
+Direction of pins on symbol. If pinDir is not set, direction will be determined according to the pin's type.
 
 ## helper.py
 Due to the heterogeneous nature of datasheets, helper.py is built to assist with determining the correct inputs for `pgs`, `strm`, `lttc`, `gss`, `a`, and `tableNums`.  
@@ -141,7 +141,16 @@ Path to datasheet file.
 #### [PAGES]
 Pages where pin description tables are located.
 
+#### [STREAM]
+inputs - [True] - defaults to False  
+Enable stream mode when the rows or columns in the tables are not seperated by lines. 
+
+#### [LATTICE] 
+inputs - [False] - defaults to True 
+Enable lattice mode when the rows or columns in the tables are seperated by lines.
+
 #### [GUESS]
+inputs - [True] - defaults to False  
 Enable guess mode where tool automatically determines table coordinates.
 
 #### [AREA]
