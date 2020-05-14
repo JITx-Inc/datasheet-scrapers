@@ -29,6 +29,7 @@ Supported Components:
   `stm32l433_ufbga64`  
   `stm32l433_lqfp100`  
   `stm32l433_ufbga100`  
+  `tps65988_vqfn56`
 
 The tool will print the PinSpec to the command line and write it to a file `pins.txt`.
 

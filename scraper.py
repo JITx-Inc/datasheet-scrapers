@@ -204,6 +204,9 @@ def nameFilter(name):
   splitName = name.split('-', 1)
   if len(splitName) > 1:
     name = splitName[0]
+  splitName = name.split('/', 1)
+  if len(splitName) > 1:
+    name = splitName[0]
   return name
 
 # Filters pin type string from table
