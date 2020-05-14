@@ -7,6 +7,8 @@ import os
 import sys
 import argparse
 
+#TODO change argument types from str to relevant types
+#TODO add flags instead of inputs
 parser = argparse.ArgumentParser(description=
                                  'Tool to visualize raw table data')
 parser.add_argument('File', type=str, help='File path of datasheet')
@@ -33,7 +35,8 @@ if args.Stream == 'True':
 if args.Lattice == 'True':
   lttc = True
 
-result = tabula.read_pdf(args.File, pages = args.Pages, area = a, guess = gss, stream = strm, lattice = lttc)
+result = tabula.read_pdf(args.File, pages = args.Pages, area = a, 
+                         guess = gss, stream = strm, lattice = lttc)
 
 for i in range(len(result)):
   print('================================================================')
