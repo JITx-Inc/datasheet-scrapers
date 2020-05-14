@@ -2,6 +2,7 @@
 A tool that scrapes pin attributes from datasheets and converts them to the PinSpec format.
 
 ## Dependencies
+python3
 numpy  
 tabula-py  
 pandas  
