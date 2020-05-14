@@ -2,10 +2,10 @@
 A tool that scrapes pin attributes from datasheets and converts them to the PinSpec format.
 
 ## Dependencies
-python3
-numpy  
-tabula-py  
-pandas  
+python3   
+numpy   
+tabula-py   
+pandas   
 
 ## scraper.py
 
@@ -118,11 +118,11 @@ Note the `left`, `top`, `height`, and `width` parameters and calculate the follo
 * `x2` =  `left + width`
 
 #### printType 
-Include pin types to the PinSpec. Defaults to True.
+Include pin types to the PinSpec. Defaults to False.
 
 #### pinDir
 inputs - ['Up', 'Down', 'Left', 'Down']
-Direction of pins on symbol. If pinDir is not set, direction will determining according to pin type.
+Direction of pins on symbol. If pinDir is not set, direction will be determined according to the pin's type.
 
 ## helper.py
 Due to the heterogeneous nature of datasheets, helper.py is built to assist with determining the correct inputs for `pgs`, `strm`, `lttc`, `gss`, `a`, and `tableNums`.  

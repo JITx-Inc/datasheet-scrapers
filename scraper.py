@@ -52,7 +52,7 @@ class package:
       testNum = next(iter(joinedPins.values())).number
       header = '[' + align_text(self.maxNameLen, 'Ref') + '|'
       if re.search('^[A-Z]+', testNum) :
-        header += align_text(self.maxNumLen, 'Ref ...') + '|'
+        header += align_text(maxNumLen, 'Ref ...') + '|'
       else:
         header += align_text(maxNumLen, 'Int ...') + '|'
       if self.printType:
@@ -75,6 +75,8 @@ class package:
   def pin_dir(self, p):
     if not self.pinDir:
       if p.pinType == 'Power':
+        return 'Up'
+      if p.pinType == 'Ground':
         return 'Down'
       if p.pinType == 'I/O':
         return 'Left'
@@ -111,7 +113,6 @@ def scrape(p):
                                  pages = p.pgs, stream = p.strm, 
                                  lattice = p.lttc)[n]
     height, width = table_vals.shape
-    #TODO Figure out if we need to add epad
     for i in range(height):
       name = nameFilter(str(repr(table_vals.iat[i, p.nameCol])))
       numbers = numFilter(str(repr(table_vals.iat[i, p.numCol])))
@@ -123,12 +124,19 @@ def scrape(p):
         typeName = typeFilter(None, name)
       for n in numbers:
         pkg.addPin(name, n, typeName)
+      if not numbers:
+        if re.search('^[eE]+', name):
+          pkg.addPin(name, str(pkg.size + 1), 'Ground')
   return pkg 
  
 # Parameters to scrape function
 # pkgName - package name
 # pkgSize - number of pins in package
 # fName - path to datasheet file
+# tableNums - list of table numbers from DataFrame containing pin data
+# numCol - column number of column containing pin numbers
+# nameCol - column number of column containing pin names
+# typeCol - column number of column containing pin types
 # pgs - pages where pin description tables are located
 # strm - [True, False, None] - stream mode for when tables are
 #                              not seperated by lines
@@ -139,14 +147,10 @@ def scrape(p):
 #                                x1 = left of table
 #                                y2 = top + height of table
 #                                x2 = left + width of table
-# numCol - column number of column containing pin numbers
-# nameCol - column number of column containing pin names
-# typeCol - column number of column containing pin types
 # printType - include pin type in PinSpec
 # pinDir - inputs = ['Up', 'Down', 'Left', 'Down', None]
 #        - direction of pins on symbol
 #        - Input None automatically solves based on pin names
-# tableNums - list of table numbers from DataFrame containing pin data
 class scrapeParams:
   def __init__(self):
     self.pkgName = None
@@ -161,7 +165,7 @@ class scrapeParams:
     self.lttc = True 
     self.gss = None 
     self.a = None
-    self.printType = True
+    self.printType = False 
     self.pinDir = None 
 
 # Filters pin number string from table
@@ -188,6 +192,16 @@ def numFilter(number):
 def nameFilter(name):
   name = name.replace('\'', '')
   name = name.replace('\\r', '')
+  splitName = name.split('(', 1)
+  if len(splitName) > 1:
+    if re.search('[0-9]+', splitName[1]):
+      name = splitName[1].replace(' ', '')
+      name = name.replace(')', '')
+    else:
+      name = splitName[0].replace(' ', '')
+  splitName = name.split('-', 1)
+  if len(splitName) > 1:
+    name = splitName[0]
   return name
 
 # Filters pin type string from table
