@@ -32,44 +32,56 @@ Supported Components:
 The tool will print the PinSpec to the command line and write it to a file `pins.txt`.
 
 ###Adding component support
-To add support for a new component, add the following code to `scraper.py` in the section marked `SUPPORTED COMPONENTS` and change the inputs to the scrape function. 
+To add support for a new component, add the following code to `scraper.py` in the section marked `SUPPORTED COMPONENTS` and add the required parameters followed by optional any parameters. 
 
 
 ```python
 if args.Component == 'pkgName':
-  pkg = scrape(pkgName, pkgSize, fName, pgs, strm, lttc, gss, a, numCol, 
-           nameCol, tableNums):
+  [EDIT PARAMATERS CLASS ATTRIBUTES HERE]
 ```
 
 ###Scrape function
-The scrape function scrapes a datasheet for the name and number of pins associated with a package.
+The scrape function scrapes a datasheet for information about pins associated with a package. The function takes in a parameters class with the following attributes: 
 
-####pkgName
+####pkgName [REQUIRED]
 The name of the desired package.
 
-####pkgSize
+####pkgSize [REQUIRED]
 Number of pins in the desired package.
 
-####fName
+####fName [REQUIRED]
 Path to datasheet file.
 
+####tableNums [REQUIRED]
+A list of table numbers that contain relevant pin data.
+
+####numCol [REQUIRED]
+The column number of the column containing pin numbers.
+
+####nameCol [REQUIRED]
+The column number of the column containing pin names.
+
+####typeCol
+The column number of the columb containing pin types.
+
 ####pgs
+inputs - [m-n] - defaults to all pages
 Pages where pin description tables are located.
 
 ####strm 
-[True, False, None]  
-Enable stream mode when the rows or columns in the tables are not seperated by lines.
+inputs - [True] - defaults to False  
+Enable stream mode when the rows or columns in the tables are not seperated by lines. 
 
 ####lttc
-[True, False, None]  
+inputs - [False] - defaults to True 
 Enable lattice mode when the rows or columns in the tables are seperated by lines.
 
 ####gss
-[True, False, None]  
+inputs - [True] - defaults to False 
 Enabling guess mode lets the tool determine the area on the page where the table is located.
 
 ####a
-[y1, x1, y2, x2] or None   
+inputs - [y1, x1, y2, x2] - defaults to None   
 y1 = top of table  
 x1 = left of table  
 y2 = top + height of table  
@@ -104,14 +116,12 @@ Note the `left`, `top`, `height`, and `width` parameters and calculate the follo
 * `y2` = `top + height`
 * `x2` =  `left + width`
 
-####numCol
-The column number of the column containing pin numbers.
+####printType 
+Include pin types to the PinSpec. Defaults to True.
 
-####nameCol
-The column number of the column containing pin names.
-
-####tableNums
-A list of table numbers that contain relevant pin data.
+####pinDir
+inputs - ['Up', 'Down', 'Left', 'Down']
+Direction of pins on symbol. If pinDir is not set, direction will determining according to pin type.
 
 ##helper.py
 Due to the heterogeneous nature of datasheets, helper.py is built to assist with determining the correct inputs for `pgs`, `strm`, `lttc`, `gss`, `a`, and `tableNums`.  
