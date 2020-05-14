@@ -80,7 +80,7 @@ class package:
         return 'Down'
       if p.pinType == 'I/O':
         return 'Left'
-      if p.pinType == 'Input':
+      if p.pinType == 'Input' or p.pinType == 'Output':
         return 'Right'
       return 'Left'
     else:
@@ -91,6 +91,8 @@ class package:
 # text - text to be added to column
 # returns aligned text for column
 def align_text(maxlen, text):
+  if not text:
+    return (maxlen + 2) * ' '
   return ' ' + text + ((maxlen - len(text)) * ' ') + ' '
       
 # Pin
@@ -214,9 +216,11 @@ def typeFilter(typeName, name):
       return 'Power'
     else:
       return 'Misc'
-  power = ['Power', 'power', 'S']
+  power = ['Power', 'power', 'S', 'PWR']
   io = ['I/O'] 
   i = ['input', 'I', 'i']
+  o = ['output', 'O', 'o']
+  gnd = ['GROUND', 'GND']
   typeName = typeName.replace('\'', '')
   typeName = typeName.replace('\\r', '')
   for s in power:
@@ -228,6 +232,12 @@ def typeFilter(typeName, name):
   for s in i:
     if s in typeName:
       return 'Input'
+  for s in o:
+    if s in typeName:
+      return 'Output'
+  for s in gnd:
+    if s in typeName:
+      return 'Ground'
   return None 
 
 # Prints a package's PinSpec to a file
@@ -378,6 +388,16 @@ elif args.Component == 'stm32l433_ufbga100':
   params.numCol = 8 
   params.nameCol = 9 
   params.typeCol = 10 
+
+elif args.Component == 'tps65988_vqfn56':
+  params.pkgName = 'TPS65988_vqfn56'
+  params.pkgSize = 56
+  params.fName = 'datasheets/tps65988.pdf'
+  params.tableNums = [0, 1, 2, 3]
+  params.pgs = '4-6'
+  params.numCol = 1
+  params.nameCol = 0
+  params.typeCol = 2
 
 else:
   success = False

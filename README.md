@@ -2,10 +2,10 @@
 A tool that scrapes pin attributes from datasheets and converts them to the PinSpec format.
 
 ## Dependencies
-python3   
-numpy   
-tabula-py   
-pandas   
+python3  
+numpy  
+tabula-py  
+pandas  
 
 ## scraper.py
 
@@ -141,7 +141,16 @@ Path to datasheet file.
 #### [PAGES]
 Pages where pin description tables are located.
 
+#### [STREAM]
+inputs - [True] - defaults to False  
+Enable stream mode when the rows or columns in the tables are not seperated by lines. 
+
+#### [LATTICE] 
+inputs - [False] - defaults to True 
+Enable lattice mode when the rows or columns in the tables are seperated by lines.
+
 #### [GUESS]
+inputs - [True] - defaults to False  
 Enable guess mode where tool automatically determines table coordinates.
 
 #### [AREA]
