@@ -15,12 +15,12 @@ python3 scraper.py [component name]
 ```
 
 Supported Components:  
-  `adm7150`  
-  `cc2640_rgz`  
-  `cc2640_rhb`  
-  `cc2640_rsm`  
-  `stm32l433_lqfp48`  
-  `stm32l433_ufqfpn48`  
+  `adm7150`   
+  `cc2640_rgz`   
+  `cc2640_rhb`   
+  `cc2640_rsm`   
+  `stm32l433_lqfp48`   
+  `stm32l433_ufqfpn48`   
   `stm32l433_wlcsp49`  
   `stm32l433_wlcsp64`  
   `stm32l433_lqfp64`  
@@ -31,7 +31,7 @@ Supported Components:
 
 The tool will print the PinSpec to the command line and write it to a file `pins.txt`.
 
-###Adding component support
+### Adding component support
 To add support for a new component, add the following code to `scraper.py` in the section marked `SUPPORTED COMPONENTS` and add the required parameters followed by optional any parameters. 
 
 
@@ -40,47 +40,47 @@ if args.Component == 'pkgName':
   [EDIT PARAMATERS CLASS ATTRIBUTES HERE]
 ```
 
-###Scrape function
+### Scrape function
 The scrape function scrapes a datasheet for information about pins associated with a package. The function takes in a parameters class with the following attributes: 
 
-####pkgName [REQUIRED]
+#### pkgName [REQUIRED]
 The name of the desired package.
 
-####pkgSize [REQUIRED]
+#### pkgSize [REQUIRED]
 Number of pins in the desired package.
 
-####fName [REQUIRED]
+#### fName [REQUIRED]
 Path to datasheet file.
 
-####tableNums [REQUIRED]
+#### tableNums [REQUIRED]
 A list of table numbers that contain relevant pin data.
 
-####numCol [REQUIRED]
+#### numCol [REQUIRED]
 The column number of the column containing pin numbers.
 
-####nameCol [REQUIRED]
+#### nameCol [REQUIRED]
 The column number of the column containing pin names.
 
-####typeCol
+#### typeCol
 The column number of the columb containing pin types.
 
-####pgs
+#### pgs
 inputs - [m-n] - defaults to all pages
 Pages where pin description tables are located.
 
-####strm 
+#### strm 
 inputs - [True] - defaults to False  
 Enable stream mode when the rows or columns in the tables are not seperated by lines. 
 
-####lttc
+#### lttc
 inputs - [False] - defaults to True 
 Enable lattice mode when the rows or columns in the tables are seperated by lines.
 
-####gss
+#### gss
 inputs - [True] - defaults to False 
 Enabling guess mode lets the tool determine the area on the page where the table is located.
 
-####a
+#### a
 inputs - [y1, x1, y2, x2] - defaults to None   
 y1 = top of table  
 x1 = left of table  
@@ -91,7 +91,7 @@ The tool accepts the coordinates (in *point measurements*, not *pixels*) of the 
 
 You can either use the "full" Tabula app to get these coordinates, or manually measure using the Preview app in Mac OS X.
 
-#####Use the Tabula app to grab table coordinates
+##### Use the Tabula app to grab table coordinates
 
 1. Download Tabula from http://tabula.technology/.
 2. Open Tabula and upload your PDF into the web page that appears.
@@ -100,7 +100,7 @@ You can either use the "full" Tabula app to get these coordinates, or manually m
 5. Open the script you downloaded in a code editor.
   * The generated script contains measurements already filled in, based on what you selected in the Tabula app. The measurements are in the order y1, x1, y2, x2. You can use this as a starting point to process many of the same type of document, for example if you have a monthly report that is generated as separate PDFs for each month, and the table you want is located in the exact same place each time.
 
-#####Use **Preview**  to grab table coordinates (OS X only)
+##### Use **Preview**  to grab table coordinates (OS X only)
 
 1. Open your PDF file in the Preview app
 2. Make sure `Tools > Rectangular selection` is checked.
@@ -116,17 +116,17 @@ Note the `left`, `top`, `height`, and `width` parameters and calculate the follo
 * `y2` = `top + height`
 * `x2` =  `left + width`
 
-####printType 
+#### printType 
 Include pin types to the PinSpec. Defaults to True.
 
-####pinDir
+#### pinDir
 inputs - ['Up', 'Down', 'Left', 'Down']
 Direction of pins on symbol. If pinDir is not set, direction will determining according to pin type.
 
-##helper.py
+## helper.py
 Due to the heterogeneous nature of datasheets, helper.py is built to assist with determining the correct inputs for `pgs`, `strm`, `lttc`, `gss`, `a`, and `tableNums`.  
 
-###Usage
+### Usage
 
 ```bash
 python3 helper.py [FILE] [PAGES] [STREAM] [LATTICE] [GUESS] [AREA] 
@@ -134,16 +134,16 @@ python3 helper.py [FILE] [PAGES] [STREAM] [LATTICE] [GUESS] [AREA]
 
 This helper function will display raw data from the datasheet organized into a list of tables. This function is used to test which inputs for [PAGES], [STREAM], [LATTICE], [GUESS], and [AREA] return the most amounts of valuable data. Often, the helper function will return some tables with completely irrelevent information. This tool allows you easily identify the tables which contain relevant data and input them to the `tableNums` list input for `scrape`.
 
-####[FILE]
+#### [FILE]
 Path to datasheet file.
 
-####[PAGES]
+#### [PAGES]
 Pages where pin description tables are located.
 
-####[GUESS]
+#### [GUESS]
 Enable guess mode where tool automatically determines table coordinates.
 
-####[AREA]
+#### [AREA]
 Table coordinates.  
 Input y1,x1,y2,x2 with no spaces, or `None`.  
 i.e. `271.9575,32.5125,447.1425,133.4925`
