@@ -6,9 +6,9 @@ numpy
 tabula-py  
 pandas  
 
-##scraper.py
+## scraper.py
 
-###Usage
+### Usage
 
 ```bash
 python3 scraper.py [component name]
